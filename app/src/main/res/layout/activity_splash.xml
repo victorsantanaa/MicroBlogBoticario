@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/fullscreenBackgroundColor"
+    android:theme="@style/ThemeOverlay.MicroBlogBoticario.FullscreenContainer"
+    tools:context=".SplashActivity">
+
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/splash_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002"
+        app:srcCompat="@mipmap/ic_banner_foreground" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/splash_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_perfil_splash_2_foreground"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="5dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toEndOf="@id/splash_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splash_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/splash_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/author_name"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:shadowRadius="2"
+        android:shadowColor="@color/white"
+        android:shadowDx="-2"
+        android:shadowDy="-2"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/splash_profile"
+        app:layout_constraintTop_toBottomOf="@id/splash_logo"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/splash_descript"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Engenheiro de Software"
+        app:layout_constraintEnd_toEndOf="@id/splash_name"
+        app:layout_constraintTop_toBottomOf="@id/splash_name"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "4203927753",
+    "project_id": "micro-blog-boticario",
+    "storage_bucket": "micro-blog-boticario.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4203927753:android:e273d85a317deb28475518",
+        "android_client_info": {
+          "package_name": "alura.com.microblogboticario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4203927753-fh4sosj51lucfqhkiiakf2pa887d6ca0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0UOnXYP8n6vevB8fRjXIJmz5oaER2JRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4203927753-fh4sosj51lucfqhkiiakf2pa887d6ca0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
