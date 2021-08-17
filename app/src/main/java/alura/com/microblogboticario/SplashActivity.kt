@@ -1,22 +1,14 @@
 package alura.com.microblogboticario
 
-import alura.com.microblogboticario.ui.theme.SplashScreen
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 
-abstract class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -28,18 +20,16 @@ abstract class SplashActivity : AppCompatActivity() {
         val user = mAuth.currentUser
 
         setFlags()
+        val handle = Handler()
 
         if (user != null) {
             Toast.makeText(applicationContext, "Bem vindo de volta"
                     + user.displayName, Toast.LENGTH_SHORT).show()
+
+            handle.postDelayed({ mostrarHome() }, 2000)
         } else {
-            val handle = Handler()
-            handle.postDelayed(Runnable { mostrarHome() }, 2000)
+            handle.postDelayed({ mostrarLogin() }, 2000)
         }
-
-
-
-
 
     }
 
@@ -52,6 +42,11 @@ abstract class SplashActivity : AppCompatActivity() {
 
     fun mostrarHome() {
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    fun mostrarLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }

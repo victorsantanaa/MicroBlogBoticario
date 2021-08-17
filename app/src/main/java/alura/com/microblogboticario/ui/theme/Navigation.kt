@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
@@ -19,16 +20,16 @@ fun NavigationSplash() {
             SplashScreen(navController = navController)
         }
         composable("main_screen") {
-            MainScreen()
+
         }
     }
 }
 
 @Composable
-fun NavigationBottom(navController: NavHostController) {
+fun NavigationBottom(navController: NavHostController, auth: FirebaseAuth) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
         composable(NavigationItem.Home.route) {
-            HomeScreen()
+            HomeScreen(auth)
         }
         composable(NavigationItem.News.route) {
             NewsScreen()
