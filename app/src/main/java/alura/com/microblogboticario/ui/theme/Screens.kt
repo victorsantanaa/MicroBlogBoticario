@@ -3,6 +3,10 @@ package alura.com.microblogboticario.ui.theme.ui.theme
 import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.MainActivity
 import alura.com.microblogboticario.R
+import alura.com.microblogboticario.model.NewsModel
+import alura.com.microblogboticario.service.Endpoint
+import alura.com.microblogboticario.service.NetworkUtils
+import alura.com.microblogboticario.ui.theme.ScrollingList
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -21,8 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun HomeScreen(auth: FirebaseAuth) {
@@ -67,6 +73,34 @@ fun HomeScreenPreview() {
 
 @Composable
 fun NewsScreen() {
+    val context = LocalContext.current
+    var listNews: List<NewsModel>? = null
+    val retrofitClient = NetworkUtils
+        .getRetrofitInstance("https://gb-mobile-app-teste.s3.amazonaws.com/data.json")
+    val endpoint = retrofitClient.create(Endpoint::class.java)
+    val callback = endpoint.getNews()
+
+    callback.enqueue(object : Callback<List<NewsModel>> {
+        override fun onResponse(
+            call: Call<List<NewsModel>>,
+            response: Response<List<NewsModel>>
+        ) {
+            if(response.body() != null) {
+                listNews = response.body()!!
+            } else {
+                Toast.makeText(context,
+                    response.errorBody().toString(),
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onFailure(call: Call<List<NewsModel>>, t: Throwable) {
+            Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+        }
+
+    })
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,8 +115,12 @@ fun NewsScreen() {
             textAlign = TextAlign.Center,
             fontSize = 25.sp
         )
+
+        }
+
+    listNews?.let { ScrollingList(it) }
     }
-}
+
 
 @Preview(showBackground = true)
 @Composable

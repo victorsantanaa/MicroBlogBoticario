@@ -1,5 +1,6 @@
 package alura.com.microblogboticario.ui.theme
 
+import alura.com.microblogboticario.model.NewsModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun ImageListItem(index: Int) {
+fun ImageListItem(index: Int, message: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Image(
             painter = rememberImagePainter(
@@ -27,13 +28,14 @@ fun ImageListItem(index: Int) {
             modifier = Modifier.size(50.dp)
         )
         Spacer(Modifier.width(10.dp))
-        Text("Item #$index", style = MaterialTheme.typography.subtitle1)
+        Text("Mensagem: #$index \n $message", style = MaterialTheme.typography.subtitle1)
     }
 }
 
 @Composable
-fun ScrollingList() {
-    val listSize = 100
+fun ScrollingList(list: List<NewsModel>) {
+    val listSize = list.size
+    val listMessage = list[0].message.content
     // We save the scrolling position with this state
     val scrollState = rememberLazyListState()
     // We save the coroutine scope where our animated scroll will be executed
@@ -62,7 +64,7 @@ fun ScrollingList() {
 
         LazyColumn(state = scrollState) {
             items(listSize) {
-                ImageListItem(it)
+                ImageListItem(it, list[it].message.content)
             }
         }
     }
