@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MicroBlogBoticario">
         <activity
+            android:name=".NewsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_news"
+            android:theme="@style/Theme.MicroBlogBoticario.NoActionBar" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
