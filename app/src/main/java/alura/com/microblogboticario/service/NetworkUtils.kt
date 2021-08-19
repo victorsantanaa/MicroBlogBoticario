@@ -2,6 +2,7 @@ package alura.com.microblogboticario.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URL
 
 
 class NetworkUtils {
@@ -17,5 +18,12 @@ class NetworkUtils {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
+
+        fun getHostUrl(stringUrl: String): String {
+            val url = URL(stringUrl)
+            return url.host
+        }
     }
+
 }
+
