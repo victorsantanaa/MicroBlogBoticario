@@ -1,35 +1,51 @@
 package alura.com.microblogboticario
 
-import alura.com.microblogboticario.ui.theme.*
+import alura.com.microblogboticario.news.activity.NewsViewModel
+import alura.com.microblogboticario.news.model.NewsModel
+import alura.com.microblogboticario.ui.theme.BottomNavigationBar
+import alura.com.microblogboticario.ui.theme.NavigationBottom
+import alura.com.microblogboticario.ui.theme.TopBar
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.material.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.*
+import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
 
-        val auth = FirebaseAuth.getInstance()
+    lateinit var newsViewModel: NewsViewModel
+    val TAG = MainActivity::class.java.simpleName
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val auth = FirebaseAuth.getInstance()
+        newsViewModel = ViewModelProvider(this,
+                        ViewModelProvider.AndroidViewModelFactory(application))
+                        .get(NewsViewModel::class.java)
+
+        newsViewModel.getNewsFromApiAndPutInDatabase()
+
         setContent {
-            MainScreen(auth)
+            MainScreen(auth, newsViewModel)
         }
     }
 }
 
 @Composable
-fun MainScreen(auth: FirebaseAuth) {
+fun MainScreen(auth: FirebaseAuth, newsViewModel: NewsViewModel) {
     val navController: NavHostController = rememberNavController()
     Scaffold(
         topBar = { TopBar() },
         bottomBar = { BottomNavigationBar(navController) }
     ) {
-        NavigationBottom(navController, auth)
+        NavigationBottom(navController, auth, newsViewModel)
     }
 }
 

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+//        FirebaseApp.initializeApp(this)
         mAuth = FirebaseAuth.getInstance()
         val user = mAuth.currentUser
 

@@ -1,41 +1,37 @@
 package alura.com.microblogboticario.ui.theme.ui.theme
 
 import alura.com.microblogboticario.LoginActivity
-import alura.com.microblogboticario.MainActivity
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.model.NewsModel
-import alura.com.microblogboticario.service.Endpoint
-import alura.com.microblogboticario.service.NetworkUtils
+import alura.com.microblogboticario.news.activity.NewsViewModel
+import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.ui.theme.ScrollingList
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @Composable
 fun HomeScreen(auth: FirebaseAuth) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.colorPrimaryDark))
+            .background(colorResource(id = R.color.white))
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
@@ -72,60 +68,39 @@ fun HomeScreenPreview() {
 }
 
 @Composable
-fun NewsScreen() {
+fun NewsScreen(newsViewModel: NewsViewModel) {
     val context = LocalContext.current
-    var listNews: List<NewsModel>? = null
-    val retrofitClient = NetworkUtils
-        .getRetrofitInstance("https://gb-mobile-app-teste.s3.amazonaws.com/data.json")
-    val endpoint = retrofitClient.create(Endpoint::class.java)
-    val callback = endpoint.getNews()
+    val owner = LocalLifecycleOwner.current
+    var listNews: MutableList<NewsModel> = mutableListOf()
+    var list by remember {
+        mutableStateOf(listNews)
+    }
 
-    callback.enqueue(object : Callback<List<NewsModel>> {
-        override fun onResponse(
-            call: Call<List<NewsModel>>,
-            response: Response<List<NewsModel>>
-        ) {
-            if(response.body() != null) {
-                listNews = response.body()!!
-            } else {
-                Toast.makeText(context,
-                    response.errorBody().toString(),
-                    Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        override fun onFailure(call: Call<List<NewsModel>>, t: Throwable) {
-            Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-        }
-
+    newsViewModel.getAllNewsList().observe(owner, Observer<List<NewsModel>>  {
+        newsList ->
+        listNews.addAll(newsList)
+        Log.e("NewsScreen: ", listNews.toString())
     })
 
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.colorPrimaryDark))
+            .fillMaxWidth()
+            .fillMaxHeight(0.93f)
+            .background(colorResource(id = R.color.white))
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(
-            text = "Notícias Boticário View",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
-
+        ScrollingList(list)
         }
 
-    listNews?.let { ScrollingList(it) }
+
     }
 
 
 @Preview(showBackground = true)
 @Composable
 fun NewsScreenPreview() {
-    NewsScreen()
+//    NewsScreen()
 }
 
 @Composable
@@ -133,7 +108,7 @@ fun NewPostScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.colorPrimaryDark))
+            .background(colorResource(id = R.color.colorPrimary))
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
