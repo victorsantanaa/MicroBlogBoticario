@@ -14,11 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MicroBlogBoticario">
         <activity
-            android:name=".RegisterActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:exported="true" />
-        <activity
             android:name=".LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"

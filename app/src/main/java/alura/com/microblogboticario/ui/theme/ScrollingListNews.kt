@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,19 +20,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import kotlinx.coroutines.launch
-import okhttp3.internal.Util
 
 
 @Composable
-fun ImageListItem(index: Int, message: String, imageUrl: String, data: String, user: String) {
+fun ImageListItemNews(index: Int, message: String, imageUrl: String, data: String, user: String) {
     Card(
         border = BorderStroke(2.dp, Color.Transparent),
         elevation = 12.dp,
@@ -83,7 +77,7 @@ fun ImageListItem(index: Int, message: String, imageUrl: String, data: String, u
 }
 
 @Composable
-fun ScrollingList(list: List<NewsModel>) {
+fun ScrollingListNews(list: List<NewsModel>) {
     val listSize = list.size
     // We save the scrolling position with this state
     val scrollState = rememberLazyListState()
@@ -98,7 +92,7 @@ fun ScrollingList(list: List<NewsModel>) {
 
         LazyColumn(state = scrollState) {
             items(listSize) {
-                ImageListItem(
+                ImageListItemNews(
                     it,
                     list[it].message_content,
                     list[it].user_profile,

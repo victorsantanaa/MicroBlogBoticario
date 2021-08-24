@@ -29,8 +29,8 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        NavigationItem.Home,
         NavigationItem.NewPost,
+        NavigationItem.Home,
         NavigationItem.News
     )
     BottomNavigation(

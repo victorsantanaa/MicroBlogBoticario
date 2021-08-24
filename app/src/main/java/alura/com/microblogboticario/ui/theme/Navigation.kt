@@ -20,7 +20,8 @@ fun NavigationBottom(navController: NavHostController, auth: FirebaseAuth, newsV
             NewsScreen(newsViewModel)
         }
         composable(NavigationItem.NewPost.route) {
-            NewPostScreen()
+            NewPostScreen(navController)
+
         }
     }
 }
