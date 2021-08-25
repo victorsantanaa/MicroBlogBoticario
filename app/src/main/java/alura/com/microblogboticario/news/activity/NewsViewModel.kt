@@ -8,6 +8,7 @@ class NewsViewModel: ViewModel() {
     var newsRepository: NewsRepository = NewsRepository()
 
 
+
     fun getAllNewsList() : LiveData<List<NewsModel>> {
         return newsRepository.getAllNews()
     }

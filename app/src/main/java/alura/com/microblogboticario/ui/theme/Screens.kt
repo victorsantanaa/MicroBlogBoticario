@@ -2,6 +2,11 @@ package alura.com.microblogboticario.ui.theme.ui.theme
 
 import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.R
+import alura.com.microblogboticario.home.ScrollingListHome
+import alura.com.microblogboticario.home.model.PostModel
+import alura.com.microblogboticario.home.returnListOfPostsFake
+import alura.com.microblogboticario.home.viewmodel.HomeViewModel
+import alura.com.microblogboticario.newpost.viewmodel.NewPostViewModel
 import alura.com.microblogboticario.news.activity.NewsViewModel
 import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.ui.theme.NavigationItem
@@ -34,21 +39,24 @@ import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun HomeScreen(auth: FirebaseAuth) {
+fun HomeScreen(auth: FirebaseAuth, homeViewModel: HomeViewModel) {
+
+    val owner = LocalLifecycleOwner.current
+    var listPost: MutableList<PostModel> = mutableListOf()
+    var list by remember {
+        mutableStateOf(listPost)
+    }
+    homeViewModel.getAllPostList().observe(owner, Observer { newList ->
+        listPost.addAll(newList)
+    })
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.white))
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(
-            text = "Home View",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
+
+        ScrollingListHome(list = list)
         ButtonLogout(auth)
     }
 }
@@ -56,7 +64,7 @@ fun HomeScreen(auth: FirebaseAuth) {
 @Composable
 fun ButtonLogout(auth: FirebaseAuth) {
     val context = LocalContext.current
-    
+
     Button(onClick = {
         Toast.makeText(context, "Saindo", Toast.LENGTH_SHORT).show()
         auth.signOut()
@@ -83,8 +91,7 @@ fun NewsScreen(newsViewModel: NewsViewModel) {
         mutableStateOf(listNews)
     }
 
-    newsViewModel.getAllNewsList().observe(owner, Observer<List<NewsModel>>  {
-        newsList ->
+    newsViewModel.getAllNewsList().observe(owner, Observer<List<NewsModel>> { newsList ->
         listNews.addAll(newsList)
         Log.e("NewsScreen: ", listNews.toString())
     })
@@ -98,10 +105,10 @@ fun NewsScreen(newsViewModel: NewsViewModel) {
             .wrapContentSize(Alignment.Center)
     ) {
         ScrollingListNews(list)
-        }
-
-
     }
+
+
+}
 
 
 @Preview(showBackground = true)
@@ -111,7 +118,10 @@ fun NewsScreenPreview() {
 }
 
 @Composable
-fun NewPostScreen(navController: NavHostController) {
+fun NewPostScreen(
+    navController: NavHostController,
+    newPostViewModel: NewPostViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,22 +146,31 @@ fun NewPostScreen(navController: NavHostController) {
                 .height(200.dp)
                 .fillMaxWidth()
         ) {
-            var textState by remember {
-                mutableStateOf(" ")
-            }
+            var textState = newPostViewModel.newPostText.value
             val maxChar = 280
             TextField(
                 value = textState,
-                onValueChange = { textState = it.take(maxChar)},
+                onValueChange = { newPostViewModel.onNewPostTextChanged(it.take(maxChar)) },
                 label = { Text("No que você está pensando?") }
             )
         }
         Spacer(modifier = Modifier.height(5.dp))
         Button(
-            onClick = { navController.navigate(NavigationItem.Home.route) },
+            onClick = {
+                newPostViewModel.onPublishClick(newPostViewModel.newPostText.value)
+                newPostViewModel.onNewPostTextChanged("")
+                navController.navigate(NavigationItem.Home.route)
+            },
             shape = RoundedCornerShape(30.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black, contentColor = Color.White),
-            modifier = Modifier.align(Alignment.End).padding(10.dp).width(110.dp).height(50.dp)
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Black,
+                contentColor = Color.White
+            ),
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(10.dp)
+                .width(110.dp)
+                .height(50.dp)
         ) {
             Text(text = "Publicar", fontWeight = FontWeight.Bold)
         }

@@ -19,7 +19,7 @@ class NewsRepository {
     val TAG = NewsRepository::class.java.simpleName
 
     fun getAllNews() : LiveData<List<NewsModel>> {
-        return MicroBlogApplication.database!!.newsDao().getAllNews()
+        return MicroBlogApplication.newsDatabase!!.newsDao().getAllNews()
     }
 
     fun apiCallAndPutInDatabase() {
@@ -43,8 +43,8 @@ class NewsRepository {
                             val listNewsResponse : List<New> = response.body()!!.news
                             val listNewsResult : List <NewsModel> = formatListNewsToDatabase(listNewsResponse)
 
-                            MicroBlogApplication.database!!.newsDao().deleAllNews()
-                            MicroBlogApplication.database!!.newsDao().insertAllNewsOnDatabase(listNewsResult)
+                            MicroBlogApplication.newsDatabase!!.newsDao().deleAllNews()
+                            MicroBlogApplication.newsDatabase!!.newsDao().insertAllNewsOnDatabase(listNewsResult)
                         }).start()
                     }
                 }

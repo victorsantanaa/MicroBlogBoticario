@@ -1,5 +1,7 @@
 package alura.com.microblogboticario
 
+import alura.com.microblogboticario.home.viewmodel.HomeViewModel
+import alura.com.microblogboticario.newpost.viewmodel.NewPostViewModel
 import alura.com.microblogboticario.news.activity.NewsViewModel
 import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.ui.theme.BottomNavigationBar
@@ -21,31 +23,56 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : ComponentActivity() {
 
     lateinit var newsViewModel: NewsViewModel
+    lateinit var newPostViewModel: NewPostViewModel
+    lateinit var homeViewModel: HomeViewModel
+
     val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val auth = FirebaseAuth.getInstance()
-        newsViewModel = ViewModelProvider(this,
-                        ViewModelProvider.AndroidViewModelFactory(application))
-                        .get(NewsViewModel::class.java)
+        homeViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        )
+            .get(HomeViewModel::class.java)
 
+        newsViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        )
+            .get(NewsViewModel::class.java)
+        newPostViewModel =
+            ViewModelProvider(
+                this, ViewModelProvider.AndroidViewModelFactory(application)
+            )
+                .get(
+                    NewPostViewModel::class.java
+                )
+
+        homeViewModel.putFakeOnDatabase()
         newsViewModel.getNewsFromApiAndPutInDatabase()
 
+
         setContent {
-            MainScreen(auth, newsViewModel)
+            MainScreen(auth, newsViewModel, newPostViewModel, homeViewModel)
         }
     }
 }
 
 @Composable
-fun MainScreen(auth: FirebaseAuth, newsViewModel: NewsViewModel) {
+fun MainScreen(
+    auth: FirebaseAuth,
+    newsViewModel: NewsViewModel,
+    newPostViewModel: NewPostViewModel,
+    homeViewModel: HomeViewModel
+) {
     val navController: NavHostController = rememberNavController()
     Scaffold(
         topBar = { TopBar() },
         bottomBar = { BottomNavigationBar(navController) }
     ) {
-        NavigationBottom(navController, auth, newsViewModel)
+        NavigationBottom(navController, auth, newsViewModel, newPostViewModel, homeViewModel)
     }
 }
 
