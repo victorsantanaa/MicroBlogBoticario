@@ -36,7 +36,7 @@ Vamos lá?
 As seguintes ferramentas foram usadas na construção do projeto:
 
 - [Jetpack Compose 🚀](https://developer.android.com/jetpack/compose?gclid=CjwKCAjwmqKJBhAWEiwAMvGt6MF1iba-lSoaj_WuGEyO_1bKNjHbC-_bXir_x2_DTl_AH0R8i0FxUxoC-wwQAvD_BwE&gclsrc=aw.ds)
-- [Room][https://developer.android.com/jetpack/androidx/releases/room?gclid=CjwKCAjwmqKJBhAWEiwAMvGt6NBRXuRXwyY0-BRTao4vTsurfecg3YOHLhWXCGuIvJQ9lNvI8ra7ABoCQaIQAvD_BwE&gclsrc=aw.ds]
-- [Retrofit][https://square.github.io/retrofit/]
-- [Firebase Auth][https://firebase.google.com/docs/auth]
-- [Kotlin][https://kotlinlang.org/]
+- [Room](https://developer.android.com/jetpack/androidx/releases/room?gclid=CjwKCAjwmqKJBhAWEiwAMvGt6NBRXuRXwyY0-BRTao4vTsurfecg3YOHLhWXCGuIvJQ9lNvI8ra7ABoCQaIQAvD_BwE&gclsrc=aw.ds)
+- [Retrofit](https://square.github.io/retrofit/)
+- [Firebase Auth](https://firebase.google.com/docs/auth)
+- [Kotlin](https://kotlinlang.org/)
