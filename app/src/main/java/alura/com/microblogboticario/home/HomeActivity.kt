@@ -110,15 +110,6 @@ fun ItemListHome(
             .fillMaxWidth()
     ) {
 
-        if (openDialog.value) {
-            AlertDialogSample(
-                post = post,
-                openDialog = openDialog,
-                onDismiss = { openDialog.value = false },
-                viewModel = homeViewModel
-            )
-        }
-
         Column(
             modifier = Modifier
                 .padding(6.dp)

@@ -2,16 +2,11 @@ package alura.com.microblogboticario.ui.theme.ui.theme
 
 import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.home.ScrollingListHome
-import alura.com.microblogboticario.home.model.PostModel
-import alura.com.microblogboticario.home.returnListOfPostsFake
-import alura.com.microblogboticario.home.viewmodel.HomeViewModel
 import alura.com.microblogboticario.newpost.viewmodel.NewPostViewModel
 import alura.com.microblogboticario.news.activity.NewsViewModel
 import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.ui.theme.NavigationItem
 import alura.com.microblogboticario.ui.theme.ScrollingListNews
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
@@ -22,24 +17,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
-
 
 
 @Composable
@@ -91,13 +81,6 @@ fun NewsScreen(newsViewModel: NewsViewModel) {
 
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun NewsScreenPreview() {
-//    NewsScreen()
-}
-
 @Composable
 fun NewPostScreen(
     navController: NavHostController,
@@ -131,7 +114,7 @@ fun NewPostScreen(
             val maxChar = 280
             TextField(
                 value = textState,
-                onValueChange = { newPostViewModel.onNewPostTextChanged(it.take(maxChar)) },
+                onValueChange = { newPostViewModel.onNewPostTextChanged(it.take(maxChar))},
                 label = { Text("No que você está pensando?") }
             )
         }

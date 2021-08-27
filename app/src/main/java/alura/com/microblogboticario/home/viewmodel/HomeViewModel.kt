@@ -11,17 +11,15 @@ class HomeViewModel: ViewModel() {
 
     private var postsRepository = PostRepository()
 
-    val onResume = mutableStateOf("")
+
     val iDPostDetails: MutableState<Int> = mutableStateOf(0)
-    val listOfPostDetail = mutableListOf<PostModel>()
 
-    fun addToListDetailPost(post: PostModel) {
-        listOfPostDetail.add(post)
+    val postTextEdit = mutableStateOf(" ")
+
+    fun onPostTextChanged(text: String) {
+        this.postTextEdit.value = text
     }
 
-    fun onResumeToTrue() {
-//        this.onResume.value = true
-    }
 
     fun getAllPostList() : LiveData<List<PostModel>> {
         return postsRepository.getAllPosts()

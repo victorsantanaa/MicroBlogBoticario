@@ -2,8 +2,11 @@ package alura.com.microblogboticario.home
 
 import alura.com.microblogboticario.MainActivity
 import alura.com.microblogboticario.R
+import alura.com.microblogboticario.Utils
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.viewmodel.HomeViewModel
+import alura.com.microblogboticario.ui.theme.DetailTopBar
+import alura.com.microblogboticario.ui.theme.NavigationItem
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -22,6 +25,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
@@ -29,12 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import coil.compose.rememberImagePainter
 import com.google.firebase.auth.FirebaseAuth
+import java.time.LocalDateTime
 
 class DetailActivity : ComponentActivity() {
 
@@ -65,15 +73,26 @@ class DetailActivity : ComponentActivity() {
 
 
         setContent {
-            DetailScreen(post = post, auth = auth, homeViewModel = homeViewModel, this)
+            Scaffold(topBar = {DetailTopBar(activity = this)}) {
+                DetailScreen(post = post, auth = auth, homeViewModel = homeViewModel, this)
+            }
+
         }
     }
 }
 
 
 @Composable
-fun DetailScreen(post: PostModel, auth: FirebaseAuth, homeViewModel: HomeViewModel, context: Activity) {
+fun DetailScreen(
+    post: PostModel,
+    auth: FirebaseAuth,
+    homeViewModel: HomeViewModel,
+    context: Activity
+) {
 
+    val isEditMode = remember {
+        mutableStateOf(false)
+    }
 
     Column(
         Modifier
@@ -121,14 +140,55 @@ fun DetailScreen(post: PostModel, auth: FirebaseAuth, homeViewModel: HomeViewMod
 
                 }
 
-                Spacer(Modifier.width(10.dp))
-                Text(
-                    post.message_content,
-                    style = MaterialTheme.typography.subtitle1,
-                    fontSize = 20.sp
-                )
+                Spacer(Modifier.height(10.dp))
+                if (isEditMode.value) {
 
-                Spacer(Modifier.width(10.dp))
+                    var textState = homeViewModel.postTextEdit.value
+                    val maxChar = 280
+                    TextField(
+                        value = textState,
+                        onValueChange = { homeViewModel.onPostTextChanged(it.take(maxChar)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.Transparent)
+                    )
+
+                    Spacer(Modifier.height(10.dp))
+
+                    Button(
+                        onClick = {
+                            post.message_content = textState
+                            post.message_created =
+                                "atualizado em " + Utils.formatDate(LocalDateTime.now().toString())
+                            homeViewModel.updatePostFromDatabase(post)
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags =  Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            context.startActivity(intent)
+                            context.finish()
+                        },
+                        shape = RoundedCornerShape(30.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.Black,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(8.dp)
+                            .width(90.dp)
+                            .height(35.dp)
+                    ) {
+                        Text(text = "Editar", fontWeight = FontWeight.Bold)
+                    }
+                } else {
+                    Text(
+                        post.message_content,
+                        style = MaterialTheme.typography.subtitle1,
+                        fontSize = 20.sp
+                    )
+                }
+
+
+                Spacer(Modifier.height(10.dp))
                 Text(
                     post.message_created,
                     style = MaterialTheme.typography.caption,
@@ -139,13 +199,18 @@ fun DetailScreen(post: PostModel, auth: FirebaseAuth, homeViewModel: HomeViewMod
             }
         }
         if (auth.currentUser?.email == post.user_name) {
-            Footer(post, homeViewModel, context)
+            Footer(post, homeViewModel, context, isEditMode)
         }
     }
 }
 
 @Composable
-fun Footer(post: PostModel,homeViewModel: HomeViewModel, context: Activity) {
+fun Footer(
+    post: PostModel,
+    homeViewModel: HomeViewModel,
+    context: Activity,
+    isEditMode: MutableState<Boolean>
+) {
     Column(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = End,
@@ -162,7 +227,7 @@ fun Footer(post: PostModel,homeViewModel: HomeViewModel, context: Activity) {
         IconToggleButton(
             checked = false,
             onCheckedChange = {
-
+                isEditMode.value = !isEditMode.value
             },
             modifier = Modifier.padding(8.dp),
             content = {

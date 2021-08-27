@@ -83,7 +83,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.onResume.value = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
         exampleLiveData.value = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
     }
 

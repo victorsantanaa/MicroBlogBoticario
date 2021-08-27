@@ -1,5 +1,6 @@
 package alura.com.microblogboticario.newpost.viewmodel
 
+import alura.com.microblogboticario.Utils
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.repository.PostRepository
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +22,7 @@ class NewPostViewModel() : ViewModel() {
 
     fun onPublishClick(text: String) {
         this.textToPublish.value = text
-        var date = LocalDateTime.now().toString()
+        var date = Utils.formatDate(LocalDateTime.now().toString())
         val user = auth.currentUser?.email
         val picture =
             "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg"
