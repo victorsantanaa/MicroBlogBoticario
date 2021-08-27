@@ -3,20 +3,18 @@ package alura.com.microblogboticario.home
 import alura.com.microblogboticario.R
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.viewmodel.HomeViewModel
-import alura.com.microblogboticario.ui.theme.AlertDialogSample
-import alura.com.microblogboticario.ui.theme.NavigationItem
-import alura.com.microblogboticario.ui.theme.ui.theme.ButtonLogout
 import android.content.Context
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -25,13 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
 @Composable
@@ -47,7 +42,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .fillMaxHeight(0.93f)
             .background(colorResource(id = R.color.white))
             .wrapContentSize(Alignment.Center)
     ) {
@@ -166,76 +162,76 @@ fun returnListOfPostsFake(): List<PostModel> {
 
     resultList.add(
         PostModel(
-            "João",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "Astri Ørmen",
+            "https://randomuser.me/api/portraits/med/women/81.jpg",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi.",
+            "17h50 - 20/07/2021",
             1
         )
     )
 
     resultList.add(
         PostModel(
-            "Miguel",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "Lélia Caldeira",
+            "https://randomuser.me/api/portraits/med/women/0.jpg",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
+            "20h12 - 20/07/2021",
             2
         )
     )
 
     resultList.add(
         PostModel(
-            "Maria",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
+            "Aaron Laurent",
+            "https://randomuser.me/api/portraits/med/men/66.jpg",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "09h43 - 21/07/2021",
             3
         )
     )
 
     resultList.add(
         PostModel(
-            "Carolina",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "Linnea Haapala",
+            "https://randomuser.me/api/portraits/med/women/20.jpg",
+            "Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
+            "09h50 - 21/07/2021",
             4
         )
     )
     resultList.add(
         PostModel(
-            "Victor",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "Guilherme Lima",
+            "https://randomuser.me/api/portraits/med/men/0.jpg",
+            "Proin vitae leo augue. Morbi at consequat nisi.",
+            "12h00 - 23/07/2021",
             5
         )
     )
     resultList.add(
         PostModel(
-            "Oswaldo",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "Lucas Chow",
+            "https://randomuser.me/api/portraits/med/men/18.jpg",
+            "Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
+            "00h00 - 01/08/2021",
             6
         )
     )
     resultList.add(
         PostModel(
-            "Lucas",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "James Gauthier",
+            "https://randomuser.me/api/portraits/med/men/48.jpg",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus.Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
+            "00h03 - 01/08/2021",
             7
         )
     )
     resultList.add(
         PostModel(
-            "Eubertron",
-            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac sem sit amet metus volutpat cursus. Proin vitae leo augue. Morbi at consequat nisi. Integer eu ante at tellus laoreet lacinia. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
-            "OnTEM",
+            "Emmeli Thøgersen",
+            "https://randomuser.me/api/portraits/med/women/4.jpg",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae leo augue. Morbi at consequat nisi. Cras at ipsum commodo, tincidunt lectus in, consectetur purus. Quisque congue consequat ultricies.",
+            "11h35 - 26/08/2021",
             8
         )
     )

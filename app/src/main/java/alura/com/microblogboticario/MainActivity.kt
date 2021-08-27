@@ -8,6 +8,7 @@ import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.ui.theme.BottomNavigationBar
 import alura.com.microblogboticario.ui.theme.NavigationBottom
 import alura.com.microblogboticario.ui.theme.TopBar
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
     lateinit var newPostViewModel: NewPostViewModel
     lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var context: Context
+    private lateinit var context: Activity
 
     private val TAG = MainActivity::class.java.simpleName
 
@@ -95,33 +96,14 @@ fun MainScreen(
     newsViewModel: NewsViewModel,
     newPostViewModel: NewPostViewModel,
     homeViewModel: HomeViewModel,
-    context: Context,
+    context: Activity,
     list: MutableList<PostModel>
 ) {
     val navController: NavHostController = rememberNavController()
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar(context) },
         bottomBar = { BottomNavigationBar(navController) }
     ) {
         NavigationBottom(navController, auth, newsViewModel, newPostViewModel, homeViewModel, context, list)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-//    MainScreen()
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun TopBarPreview() {
-    TopBar()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BottomNavigationBarPreview() {
-    BottomNavigationBar(rememberNavController())
 }

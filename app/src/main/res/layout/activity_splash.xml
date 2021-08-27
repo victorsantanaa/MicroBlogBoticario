@@ -8,6 +8,16 @@
     android:theme="@style/ThemeOverlay.MicroBlogBoticario.FullscreenContainer"
     tools:context=".SplashActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/themedark_grey_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 
     <ImageView
         android:id="@+id/splash_logo"

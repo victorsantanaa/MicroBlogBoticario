@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#FF03DAC5</color>
-    <color name="colorPrimaryDark">#FF018786</color>
+    <color name="colorPrimary">#FF000000</color>
+    <color name="colorPrimaryDark">#111713</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
@@ -16,4 +16,13 @@
     <color name="black_overlay">#66000000</color>
     <color name="boticario_background">#dedbd4</color>
     <color name="white_gray">#EFEDE9</color>
+    <color name="gray_231d19">#231d19</color>
+
+
+
+    <color name="themedark_black">#111713</color>
+    <color name="themedark_grey_dark">#33332e</color>
+    <color name="themedark_chumbo">#686258</color>
+    <color name="themedark_grey_light">#9e9895</color>
+    <color name="themedark_white">#e4dfdd</color>
 </resources>

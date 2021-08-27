@@ -1,5 +1,6 @@
 package alura.com.microblogboticario.home
 
+import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.MainActivity
 import alura.com.microblogboticario.R
 import alura.com.microblogboticario.Utils
@@ -198,7 +199,7 @@ fun DetailScreen(
                 )
             }
         }
-        if (auth.currentUser?.email == post.user_name) {
+        if (auth.currentUser?.displayName == post.user_name) {
             Footer(post, homeViewModel, context, isEditMode)
         }
     }
@@ -238,8 +239,9 @@ fun Footer(
         IconButton(
             onClick = {
                 homeViewModel.deletePostFromDatabase(post)
-                context.startActivity(Intent(context, MainActivity::class.java))
-                context.finish()
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags =  Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                context.startActivity(intent)
 
 
             },

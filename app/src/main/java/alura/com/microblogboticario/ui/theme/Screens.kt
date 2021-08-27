@@ -11,13 +11,17 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -29,23 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.google.firebase.auth.FirebaseAuth
 
-
-@Composable
-fun ButtonLogout(auth: FirebaseAuth) {
-    val context = LocalContext.current
-
-    Button(onClick = {
-        Toast.makeText(context, "Saindo", Toast.LENGTH_SHORT).show()
-        auth.signOut()
-        context.startActivity(Intent(context, LoginActivity::class.java))
-
-    }) {
-        Text(text = "Sair da conta")
-
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -86,19 +76,22 @@ fun NewPostScreen(
     navController: NavHostController,
     newPostViewModel: NewPostViewModel
 ) {
+    val user = FirebaseAuth.getInstance().currentUser
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.white_gray))
             .wrapContentSize(Alignment.TopCenter)
     ) {
+
+        Spacer(Modifier.height(16.dp))
         Text(
-            text = "Nova Postagem View",
+            text = "Digite uma postagem nova, " + user?.displayName.toString(),
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = Color.Black,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
-            fontSize = 25.sp
+            fontSize = 20.sp
         )
         Card(
             border = BorderStroke(2.dp, Color.Transparent),

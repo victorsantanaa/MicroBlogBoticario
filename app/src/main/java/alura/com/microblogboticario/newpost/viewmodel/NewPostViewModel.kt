@@ -23,7 +23,7 @@ class NewPostViewModel() : ViewModel() {
     fun onPublishClick(text: String) {
         this.textToPublish.value = text
         var date = Utils.formatDate(LocalDateTime.now().toString())
-        val user = auth.currentUser?.email
+        val user = auth.currentUser?.displayName
         val picture =
             "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg"
         postRepository.putNewPostOnDatabase(

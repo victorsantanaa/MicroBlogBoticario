@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
         val handle = Handler()
 
         if (user != null) {
-            Toast.makeText(applicationContext, "Bem vindo de volta"
+            Toast.makeText(applicationContext, "Bem vindo de volta "
                     + user.displayName, Toast.LENGTH_SHORT).show()
 
             handle.postDelayed({ mostrarHome() }, 2000)
