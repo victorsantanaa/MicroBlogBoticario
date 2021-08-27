@@ -11,6 +11,7 @@ import alura.com.microblogboticario.news.activity.NewsViewModel
 import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.ui.theme.NavigationItem
 import alura.com.microblogboticario.ui.theme.ScrollingListNews
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
@@ -21,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -38,28 +40,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 
-@Composable
-fun HomeScreen(auth: FirebaseAuth, homeViewModel: HomeViewModel) {
 
-    val owner = LocalLifecycleOwner.current
-    var listPost: MutableList<PostModel> = mutableListOf()
-    var list by remember {
-        mutableStateOf(listPost)
-    }
-    homeViewModel.getAllPostList().observe(owner, Observer { newList ->
-        listPost.addAll(newList)
-    })
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.white))
-            .wrapContentSize(Alignment.Center)
-    ) {
-
-        ScrollingListHome(list = list)
-        ButtonLogout(auth)
-    }
-}
 
 @Composable
 fun ButtonLogout(auth: FirebaseAuth) {

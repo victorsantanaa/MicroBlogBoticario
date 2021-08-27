@@ -1,25 +1,47 @@
 package alura.com.microblogboticario
 
+import alura.com.microblogboticario.home.model.PostModel
+import alura.com.microblogboticario.home.viewmodel.HomeViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
+    lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-//        FirebaseApp.initializeApp(this)
         mAuth = FirebaseAuth.getInstance()
         val user = mAuth.currentUser
+
+        homeViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        )
+            .get(HomeViewModel::class.java)
+
+        var listPost: MutableList<PostModel> = mutableListOf()
+        var list = mutableStateOf(listPost)
+
+        homeViewModel.putFakeOnDatabase()
+        homeViewModel.getAllPostList().observe(this, Observer { newList ->
+            listPost.addAll(newList)
+        })
+
+
 
         setFlags()
         val handle = Handler()

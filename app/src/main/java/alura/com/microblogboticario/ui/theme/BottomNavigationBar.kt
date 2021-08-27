@@ -1,30 +1,17 @@
 package alura.com.microblogboticario.ui.theme
 
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.ui.theme.ui.theme.HomeScreen
-import alura.com.microblogboticario.ui.theme.ui.theme.NewPostScreen
-import alura.com.microblogboticario.ui.theme.ui.theme.NewsScreen
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {

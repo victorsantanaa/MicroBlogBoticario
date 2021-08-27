@@ -7,20 +7,45 @@ import androidx.lifecycle.LiveData
 
 class PostRepository {
 
+    val dao = MicroBlogApplication.postDatabase!!.postDao()
+
     fun getAllPosts(): LiveData<List<PostModel>> {
-        return MicroBlogApplication.postDatabase!!.postDao().getAllPosts()
+        return dao.getAllPosts()
+    }
+
+    fun getPostById(postId: Long): LiveData<PostModel> {
+        return dao.getPostById(postId)
     }
 
     fun putFakePostsOnDatabase() {
         Thread(Runnable {
-            MicroBlogApplication.postDatabase!!.postDao()
+            dao
                 .insertAllPostsOnDatabase(returnListOfPostsFake())
         }).start()
     }
 
     fun putNewPostOnDatabase(post: PostModel) {
         Thread(Runnable {
-            MicroBlogApplication.postDatabase!!.postDao().insertNewPostOnDatabase(post)
+            dao.insertNewPostOnDatabase(post)
+        }).start()
+    }
+
+    fun deletePostFromDatabase(post: PostModel) {
+        Thread(Runnable {
+            dao.deleteByPostId(post.id)
+        }).start()
+    }
+
+    fun updatePostOnDatabase(post: PostModel) {
+        Thread(Runnable {
+            dao.updatePost(post)
+        }).start()
+    }
+
+
+    fun getAllByUserName(user: String?) {
+        Thread(Runnable {
+            dao.getPostsByUserName(user)
         }).start()
     }
 }

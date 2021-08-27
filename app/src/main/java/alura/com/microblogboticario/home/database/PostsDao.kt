@@ -3,6 +3,7 @@ package alura.com.microblogboticario.home.database
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.news.model.NewsModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 
 @Dao
@@ -24,9 +25,12 @@ interface PostsDao {
     fun deleteByPostId(postId: Long)
 
     @Query("SELECT * FROM Posts where id = :postId")
-    fun getPostById(postId: Long) : PostModel?
+    fun getPostById(postId: Long) : LiveData<PostModel>
 
     @Update
     fun updatePost(post: PostModel)
+
+    @Query("SELECT * FROM Posts WHERE user_name = :user")
+    fun getPostsByUserName(user: String?) : LiveData<List<PostModel>>
 
 }

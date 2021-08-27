@@ -2,6 +2,7 @@ package alura.com.microblogboticario.home.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Posts")
 data class PostModel(
@@ -11,6 +12,6 @@ data class PostModel(
     var message_created: String,
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
-)
+) : Serializable
 
 
