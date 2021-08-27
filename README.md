@@ -18,7 +18,7 @@ Vamos lá?
 "
 </p>
 
-###Requisitos 
+### Requisitos 
 
 - Tela de splash screen com informações sobre você, fique à vontade pra apresentar seu nome, e-mail uma foto divertida sua ☺. Mas se quiser só colocar uma logo do seu produto, tá valendo ;)
 - Tela de login para informar e-mail e senha;
@@ -36,7 +36,7 @@ Vamos lá?
 As seguintes ferramentas foram usadas na construção do projeto:
 
 - [Jetpack Compose 🚀](https://developer.android.com/jetpack/compose?gclid=CjwKCAjwmqKJBhAWEiwAMvGt6MF1iba-lSoaj_WuGEyO_1bKNjHbC-_bXir_x2_DTl_AH0R8i0FxUxoC-wwQAvD_BwE&gclsrc=aw.ds)
-- [Node.js][nodejs]
-- [React][reactjs]
-- [React Native][rn]
-- [TypeScript][typescript]
+- [Room][https://developer.android.com/jetpack/androidx/releases/room?gclid=CjwKCAjwmqKJBhAWEiwAMvGt6NBRXuRXwyY0-BRTao4vTsurfecg3YOHLhWXCGuIvJQ9lNvI8ra7ABoCQaIQAvD_BwE&gclsrc=aw.ds]
+- [Retrofit][https://square.github.io/retrofit/]
+- [Firebase Auth][https://firebase.google.com/docs/auth]
+- [Kotlin][https://kotlinlang.org/]
