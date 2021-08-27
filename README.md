@@ -10,5 +10,6 @@
 
 ## Descrição do Projeto
 <p align="left">
-                Desafio técnico proposto pelo time de recrutamento do [Grupo Boticário](https://www.grupoboticario.com.br/pt/Paginas/Inicial.aspx)
+                Desafio técnico proposto pelo time de recrutamento do []()<a href="https://www.grupoboticario.com.br/pt/Paginas/Inicial.aspx">
+Grupo Boticário</a>
 </p>
