@@ -5,3 +5,10 @@
 <h4 align="center">
 	🚧 MicroBlog Boticário em construção... 🚧
 </h4>
+
+<h1 align="center">MicroBlog - Boticário</h1>
+
+## Descrição do Projeto
+<p align="center">
+                Desafio técnico proposto pelo time de recrutamento do (Grupo Boticário)[https://www.grupoboticario.com.br/pt/Paginas/Inicial.aspx]
+</p>
