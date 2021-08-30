@@ -40,3 +40,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Retrofit](https://square.github.io/retrofit/)
 - [Firebase Auth](https://firebase.google.com/docs/auth)
 - [Kotlin](https://kotlinlang.org/)
+
+
+## Download do APK
+- [APK](https://github.com/victorsantanaa/MicroBlogBoticario/blob/main/microblog-boticario-victor_santana.apk)
