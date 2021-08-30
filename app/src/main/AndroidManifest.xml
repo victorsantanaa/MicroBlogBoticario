@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="alura.com.microblogboticario">
+    package="victor.com.microblogboticario">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".MicroBlogApplication"
+        android:name="victor.com.microblogboticario.MicroBlogApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,18 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MicroBlogBoticario">
         <activity
-            android:name=".home.ProfileActivity"
+            android:name="victor.com.microblogboticario.home.view.ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".home.DetailActivity"
+            android:name="victor.com.microblogboticario.home.view.DetailActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name="victor.com.microblogboticario.LoginActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashActivity"
+            android:name="victor.com.microblogboticario.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:label="@string/title_activity_splash"
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="victor.com.microblogboticario.MainActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:label="@string/app_name"
