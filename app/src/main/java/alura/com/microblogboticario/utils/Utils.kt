@@ -1,4 +1,4 @@
-package alura.com.microblogboticario
+package alura.com.microblogboticario.utils
 
 import java.lang.StringBuilder
 
@@ -7,7 +7,7 @@ class Utils {
     companion object {
 
         fun formatDate(data: String): String {
-            var result = StringBuilder()
+            val result = StringBuilder()
 
             result.append(data.subSequence(11, 13))
             result.append("h")

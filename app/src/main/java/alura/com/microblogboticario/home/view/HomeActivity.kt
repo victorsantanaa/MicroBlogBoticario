@@ -1,4 +1,4 @@
-package alura.com.microblogboticario.home
+package alura.com.microblogboticario.home.view
 
 import alura.com.microblogboticario.R
 import alura.com.microblogboticario.home.model.PostModel
@@ -13,18 +13,14 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.google.firebase.auth.FirebaseAuth
 
@@ -34,12 +30,8 @@ fun HomeScreen(
     list: List<PostModel>,
     auth: FirebaseAuth,
     homeViewModel: HomeViewModel,
-    navController: NavHostController,
     context: Context
 ) {
-
-    val owner = LocalLifecycleOwner.current
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +40,7 @@ fun HomeScreen(
             .wrapContentSize(Alignment.Center)
     ) {
 
-        ScrollingListHome(list = list.asReversed(), homeViewModel, navController, context)
+        ScrollingListHome(list = list.asReversed(), homeViewModel, context)
         ButtonLogout(auth)
     }
 }
@@ -58,7 +50,6 @@ fun HomeScreen(
 fun ScrollingListHome(
     list: List<PostModel>,
     viewModel: ViewModel,
-    navController: NavHostController,
     context: Context
 ) {
     val listSize = list.size
@@ -73,7 +64,6 @@ fun ScrollingListHome(
                 ItemListHome(
                     list[it],
                     viewModel,
-                    navController,
                     context
                 )
             }
@@ -87,14 +77,8 @@ fun ScrollingListHome(
 fun ItemListHome(
     post: PostModel,
     viewModel: ViewModel,
-    navController: NavHostController,
     context: Context
 ) {
-
-
-    val openDialog = remember {
-        mutableStateOf(false)
-    }
     val homeViewModel = viewModel as HomeViewModel
     Card(
         border = BorderStroke(2.dp, Color.Transparent),

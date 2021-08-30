@@ -1,8 +1,7 @@
-package alura.com.microblogboticario.home
+package alura.com.microblogboticario.home.view
 
 import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.ui.theme.ProfileTopBar
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,15 +9,15 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable

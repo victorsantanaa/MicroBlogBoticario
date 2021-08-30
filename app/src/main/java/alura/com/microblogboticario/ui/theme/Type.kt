@@ -1,4 +1,4 @@
-package alura.com.microblogboticario.ui.theme.ui.theme
+package alura.com.microblogboticario.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,13 +1,11 @@
-package alura.com.microblogboticario.home
+package alura.com.microblogboticario.home.view
 
-import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.MainActivity
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.Utils
+import alura.com.microblogboticario.utils.Utils
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.viewmodel.HomeViewModel
-import alura.com.microblogboticario.ui.theme.DetailTopBar
-import alura.com.microblogboticario.ui.theme.NavigationItem
+import alura.com.microblogboticario.components.DetailTopBar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -21,6 +19,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -34,10 +33,10 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
@@ -66,6 +65,7 @@ class DetailActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         homeViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory(application)
@@ -74,7 +74,7 @@ class DetailActivity : ComponentActivity() {
 
 
         setContent {
-            Scaffold(topBar = {DetailTopBar(activity = this)}) {
+            Scaffold(topBar = { DetailTopBar(activity = this) }) {
                 DetailScreen(post = post, auth = auth, homeViewModel = homeViewModel, this)
             }
 
@@ -142,13 +142,21 @@ fun DetailScreen(
                 }
 
                 Spacer(Modifier.height(10.dp))
-                if (isEditMode.value) {
 
-                    var textState = homeViewModel.postTextEdit.value
+                if (isEditMode.value) {
+                    homeViewModel.onPostTextChanged(post.message_content)
+                    val textState: String = homeViewModel.postTextEdit.value
                     val maxChar = 280
-                    TextField(
-                        value = textState,
-                        onValueChange = { homeViewModel.onPostTextChanged(it.take(maxChar)) },
+
+                    val query = remember {
+                        mutableStateOf(textState)
+                    }
+                    OutlinedTextField(
+                        value = query.value,
+                        onValueChange = {
+                            query.value = it.take(maxChar)
+                            homeViewModel.onPostTextChanged(it.take(maxChar))
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Color.Transparent)
@@ -158,13 +166,11 @@ fun DetailScreen(
 
                     Button(
                         onClick = {
-                            post.message_content = textState
+                            post.message_content = query.value
                             post.message_created =
-                                "atualizado em " + Utils.formatDate(LocalDateTime.now().toString())
+                                "editado em " + Utils.formatDate(LocalDateTime.now().toString())
                             homeViewModel.updatePostFromDatabase(post)
-                            val intent = Intent(context, MainActivity::class.java)
-                            intent.flags =  Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            context.startActivity(intent)
+                            goToMainActivity(context)
                             context.finish()
                         },
                         shape = RoundedCornerShape(30.dp),
@@ -181,15 +187,20 @@ fun DetailScreen(
                         Text(text = "Editar", fontWeight = FontWeight.Bold)
                     }
                 } else {
-                    Text(
-                        post.message_content,
-                        style = MaterialTheme.typography.subtitle1,
-                        fontSize = 20.sp
-                    )
+                    SelectionContainer {
+                        Column {
+                            Text(
+                                post.message_content,
+                                style = MaterialTheme.typography.subtitle1,
+                                fontSize = 20.sp
+                            )
+                        }
+                    }
                 }
 
 
                 Spacer(Modifier.height(10.dp))
+
                 Text(
                     post.message_created,
                     style = MaterialTheme.typography.caption,
@@ -212,6 +223,11 @@ fun Footer(
     context: Activity,
     isEditMode: MutableState<Boolean>
 ) {
+
+    val openDialog = remember {
+        mutableStateOf(false)
+    }
+
     Column(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = End,
@@ -238,10 +254,8 @@ fun Footer(
 
         IconButton(
             onClick = {
-                homeViewModel.deletePostFromDatabase(post)
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags =  Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                context.startActivity(intent)
+                openDialog.value = true
+                //deleteFromDatabase(homeViewModel, post, context)
 
 
             },
@@ -252,6 +266,50 @@ fun Footer(
         )
 
     }
+
+    if (openDialog.value) {
+        AlertDialog(
+            title = {
+                Text("Apagar postagem!")
+            },
+            text = { Text("Você deseja realmente deletar a postagem?") },
+            onDismissRequest = { openDialog.value = false },
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(BorderStroke(2.dp, Color.Transparent))
+                .shadow(12.dp),
+            confirmButton = {
+                TextButton(onClick = {
+                    deleteFromDatabase(homeViewModel, post, context)
+                    openDialog.value = false
+                }) {
+                    Text(text = "Apagar", color = Color.Black)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { openDialog.value = false }) {
+                    Text(text = "Cancelar", color = Color.Black)
+                }
+            }
+        )
+
+    }
+}
+
+private fun deleteFromDatabase(
+    homeViewModel: HomeViewModel,
+    post: PostModel,
+    context: Activity
+) {
+    homeViewModel.deletePostFromDatabase(post)
+    goToMainActivity(context)
+}
+
+private fun goToMainActivity(context: Activity) {
+    val intent = Intent(context, MainActivity::class.java)
+    intent.flags =
+        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    context.startActivity(intent)
 }
 
 

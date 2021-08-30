@@ -1,12 +1,10 @@
-package alura.com.microblogboticario.ui.theme
+package alura.com.microblogboticario.components
 
-import alura.com.microblogboticario.home.HomeScreen
+import alura.com.microblogboticario.home.view.HomeScreen
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.viewmodel.HomeViewModel
-import alura.com.microblogboticario.newpost.viewmodel.NewPostViewModel
-import alura.com.microblogboticario.news.activity.NewsViewModel
-import alura.com.microblogboticario.ui.theme.ui.theme.NewPostScreen
-import alura.com.microblogboticario.ui.theme.ui.theme.NewsScreen
+import alura.com.microblogboticario.home.viewmodel.NewPostViewModel
+import alura.com.microblogboticario.news.viewmodel.NewsViewModel
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -28,7 +26,7 @@ fun NavigationBottom(
 ) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
         composable(NavigationItem.Home.route) {
-            HomeScreen(list,auth, homeViewModel, navController, context)
+            HomeScreen(list,auth, homeViewModel, context)
         }
         composable(NavigationItem.News.route) {
             NewsScreen(newsViewModel)

@@ -1,29 +1,22 @@
-package alura.com.microblogboticario.ui.theme.ui.theme
+package alura.com.microblogboticario.components
 
-import alura.com.microblogboticario.LoginActivity
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.newpost.viewmodel.NewPostViewModel
-import alura.com.microblogboticario.news.activity.NewsViewModel
+import alura.com.microblogboticario.home.viewmodel.NewPostViewModel
 import alura.com.microblogboticario.news.model.NewsModel
-import alura.com.microblogboticario.ui.theme.NavigationItem
-import alura.com.microblogboticario.ui.theme.ScrollingListNews
-import android.content.Intent
+import alura.com.microblogboticario.news.viewmodel.NewsViewModel
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,28 +24,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 import com.google.firebase.auth.FirebaseAuth
 
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-//    HomeScreen()
-}
-
 @Composable
 fun NewsScreen(newsViewModel: NewsViewModel) {
-    val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
-    var listNews: MutableList<NewsModel> = mutableListOf()
-    var list by remember {
+    val listNews: MutableList<NewsModel> = mutableListOf()
+    val list by remember {
         mutableStateOf(listNews)
     }
 
-    newsViewModel.getAllNewsList().observe(owner, Observer<List<NewsModel>> { newsList ->
+    newsViewModel.getAllNewsList().observe(owner, { newsList ->
         listNews.addAll(newsList)
         Log.e("NewsScreen: ", listNews.toString())
     })
@@ -103,7 +87,7 @@ fun NewPostScreen(
                 .height(200.dp)
                 .fillMaxWidth()
         ) {
-            var textState = newPostViewModel.newPostText.value
+            val textState = newPostViewModel.newPostText.value
             val maxChar = 280
             TextField(
                 value = textState,

@@ -1,8 +1,8 @@
 package alura.com.microblogboticario.home.repository
 
 import alura.com.microblogboticario.home.model.PostModel
-import alura.com.microblogboticario.home.returnListOfPostsFake
-import alura.com.microblogboticario.news.MicroBlogApplication
+import alura.com.microblogboticario.home.view.returnListOfPostsFake
+import alura.com.microblogboticario.MicroBlogApplication
 import androidx.lifecycle.LiveData
 
 class PostRepository {

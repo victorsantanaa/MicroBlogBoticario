@@ -2,25 +2,20 @@ package alura.com.microblogboticario
 
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.viewmodel.HomeViewModel
-import alura.com.microblogboticario.newpost.viewmodel.NewPostViewModel
-import alura.com.microblogboticario.news.activity.NewsViewModel
-import alura.com.microblogboticario.news.model.NewsModel
-import alura.com.microblogboticario.ui.theme.BottomNavigationBar
-import alura.com.microblogboticario.ui.theme.NavigationBottom
-import alura.com.microblogboticario.ui.theme.TopBar
+import alura.com.microblogboticario.home.viewmodel.NewPostViewModel
+import alura.com.microblogboticario.news.viewmodel.NewsViewModel
+import alura.com.microblogboticario.components.BottomNavigationBar
+import alura.com.microblogboticario.components.NavigationBottom
+import alura.com.microblogboticario.components.TopBar
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -31,13 +26,11 @@ import java.time.format.DateTimeFormatter
 class MainActivity : ComponentActivity() {
     private val exampleLiveData = MutableLiveData("")
 
-    lateinit var newsViewModel: NewsViewModel
-    lateinit var newPostViewModel: NewPostViewModel
-    lateinit var homeViewModel: HomeViewModel
+    private lateinit var newsViewModel: NewsViewModel
+    private lateinit var newPostViewModel: NewPostViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var context: Activity
-
-    private val TAG = MainActivity::class.java.simpleName
 
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,11 +61,11 @@ class MainActivity : ComponentActivity() {
         homeViewModel.putFakeOnDatabase()
         newsViewModel.getNewsFromApiAndPutInDatabase()
 
-        var listPost: MutableList<PostModel> = mutableListOf()
-        var list = mutableStateOf(listPost)
+        val listPost: MutableList<PostModel> = mutableListOf()
+        val list = mutableStateOf(listPost)
 
         homeViewModel.putFakeOnDatabase()
-        homeViewModel.getAllPostList().observe(this, Observer { newList ->
+        homeViewModel.getAllPostList().observe(this, { newList ->
             listPost.addAll(newList)
         })
 

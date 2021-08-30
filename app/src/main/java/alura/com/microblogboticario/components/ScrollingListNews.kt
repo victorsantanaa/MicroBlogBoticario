@@ -1,7 +1,7 @@
-package alura.com.microblogboticario.ui.theme
+package alura.com.microblogboticario.components
 
 import alura.com.microblogboticario.R
-import alura.com.microblogboticario.Utils
+import alura.com.microblogboticario.utils.Utils
 import alura.com.microblogboticario.news.model.NewsModel
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

@@ -1,6 +1,6 @@
-package alura.com.microblogboticario.newpost.viewmodel
+package alura.com.microblogboticario.home.viewmodel
 
-import alura.com.microblogboticario.Utils
+import alura.com.microblogboticario.utils.Utils
 import alura.com.microblogboticario.home.model.PostModel
 import alura.com.microblogboticario.home.repository.PostRepository
 import androidx.compose.runtime.mutableStateOf

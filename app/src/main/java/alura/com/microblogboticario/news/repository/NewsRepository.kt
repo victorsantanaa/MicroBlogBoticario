@@ -1,6 +1,6 @@
-package alura.com.microblogboticario.news.activity
+package alura.com.microblogboticario.news.repository
 
-import alura.com.microblogboticario.news.MicroBlogApplication
+import alura.com.microblogboticario.MicroBlogApplication
 import alura.com.microblogboticario.news.model.New
 import alura.com.microblogboticario.news.model.NewsModel
 import alura.com.microblogboticario.news.model.Response

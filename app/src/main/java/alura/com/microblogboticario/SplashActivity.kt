@@ -8,8 +8,6 @@ import android.os.Handler
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,11 +29,10 @@ class SplashActivity : AppCompatActivity() {
         )
             .get(HomeViewModel::class.java)
 
-        var listPost: MutableList<PostModel> = mutableListOf()
-        var list = mutableStateOf(listPost)
+        val listPost: MutableList<PostModel> = mutableListOf()
 
         homeViewModel.putFakeOnDatabase()
-        homeViewModel.getAllPostList().observe(this, Observer { newList ->
+        homeViewModel.getAllPostList().observe(this, { newList ->
             listPost.addAll(newList)
         })
 

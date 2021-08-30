@@ -1,4 +1,4 @@
-package alura.com.microblogboticario.newpost.viewmodel
+package alura.com.microblogboticario.home.viewmodel
 
 import alura.com.microblogboticario.home.repository.PostRepository
 import androidx.lifecycle.ViewModel

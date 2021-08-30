@@ -3,21 +3,13 @@ package alura.com.microblogboticario
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginBottom
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 
@@ -116,7 +108,7 @@ class LoginActivity : AppCompatActivity() {
                         } else {
                             val error = task.exception?.message
                             Toast.makeText(
-                                this, "Erro no cadastro: " + error,
+                                this, "Erro no cadastro: $error",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

@@ -1,13 +1,9 @@
-package alura.com.microblogboticario.news
+package alura.com.microblogboticario
 
 import alura.com.microblogboticario.home.database.PostDatabase
-import alura.com.microblogboticario.home.returnListOfPostsFake
 import alura.com.microblogboticario.news.database.NewsDatabase
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 
 class MicroBlogApplication: Application() {
 

@@ -1,4 +1,4 @@
-package alura.com.microblogboticario.ui.theme
+package alura.com.microblogboticario.components
 
 import alura.com.microblogboticario.R
 import androidx.compose.material.BottomNavigation

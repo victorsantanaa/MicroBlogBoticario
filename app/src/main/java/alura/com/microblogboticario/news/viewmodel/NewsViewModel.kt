@@ -1,6 +1,7 @@
-package alura.com.microblogboticario.news.activity
+package alura.com.microblogboticario.news.viewmodel
 
 import alura.com.microblogboticario.news.model.NewsModel
+import alura.com.microblogboticario.news.repository.NewsRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
